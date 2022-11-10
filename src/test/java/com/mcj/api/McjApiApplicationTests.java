@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class McjApiApplicationTests {
-
+class McjApiApplicationTests
+{
 	@Test
-	void contextLoads() {
+	void contextLoads()
+	{
 	}
-
 }
