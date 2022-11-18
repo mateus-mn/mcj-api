@@ -18,4 +18,9 @@ public class GrupoService
 	{
 		return grupoRepository.findAll();
 	}
+
+	public void cadastrar (Grupo grupo)
+	{
+		grupoRepository.save(grupo);
+	}
 }
