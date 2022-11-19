@@ -1,10 +1,12 @@
 package com.mcj.api.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mcj.api.form.GrupoForm;
 import com.mcj.api.model.Grupo;
 import com.mcj.api.repository.GrupoRepository;
 
@@ -22,5 +24,21 @@ public class GrupoService
 	public void cadastrar (Grupo grupo)
 	{
 		grupoRepository.save(grupo);
+	}
+
+	public Grupo alterar(Long id, GrupoForm form)
+	{
+		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
+		if(optionalGrupo.isPresent())
+		{
+			Grupo grupo = optionalGrupo.get();
+
+			grupo.setNumero(form.getNumero());
+			grupo.setNome(form.getNome());
+			
+			return grupo;
+		}
+
+		return null;
 	}
 }
