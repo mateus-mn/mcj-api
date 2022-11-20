@@ -1,4 +1,4 @@
-package com.mcj.api.security;
+package com.mcj.api.service;
 
 import java.util.Date;
 

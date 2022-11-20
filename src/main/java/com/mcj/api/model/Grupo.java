@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Grupo
 {
-	// PARÂMETROS
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -18,21 +18,18 @@ public class Grupo
 	private String nome;
 
 	private Boolean ativo = true;
-	// FIM DOS PARÂMETROS
-	
-	// CONTRUTORES
+
 	public Grupo()
 	{
+
 	}
-	
+
 	public Grupo(Long numero, String nome)
 	{
 		this.numero = numero;
 		this.nome   = nome;
 	}
-	// FIM DOS CONTRUTORES
 
-	// GETTERS
 	public Long getId()
 	{
 		return this.id;
@@ -52,9 +49,7 @@ public class Grupo
 	{
 		return this.ativo;
 	}
-	// FIM DOS GETTERS
-	
-	// SETTERS
+
 	public void setNumero(Long numero)
 	{
 		this.numero = numero;
@@ -69,5 +64,4 @@ public class Grupo
 	{
 		this.ativo = ativo;
 	}
-	// FIM DOS SETTERS
 }

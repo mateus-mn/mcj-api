@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 public class Usuario implements UserDetails
 {
-	// PARÂMETROS
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -32,9 +31,7 @@ public class Usuario implements UserDetails
 	private List<Perfil> perfil = new ArrayList<>();
 
 	private Boolean ativo = true;
-	// FIM DOS PARÂMETROS
 
-	// CONSTRUTORES
 	public Usuario()
 	{
 	}
@@ -52,9 +49,7 @@ public class Usuario implements UserDetails
 		this.perfil = perfis;
 
 	}
-	// FIM DOS CONSTRUTORES
 
-	// GETTERS
 	public Long getId()
 	{
 		return this.id;
@@ -84,9 +79,7 @@ public class Usuario implements UserDetails
 	{
 		return this.ativo;
 	}
-	// FIM DOS GETTERS
 
-	// SETTERS
 	public void setId(Long id)
 	{
 		this.id = id;
@@ -116,9 +109,7 @@ public class Usuario implements UserDetails
 	{
 		this.ativo = ativo;
 	}
-	// FIM DOS SETTERS
 
-	// MÉTODOS DE SOBRECARGA
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities()
 	{
@@ -167,5 +158,4 @@ public class Usuario implements UserDetails
 			return this.ativo;
 		}
 	}
-	// FIM DOS MÉTODOS DE SOBRECARGA
 }

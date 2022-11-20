@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.mcj.api.model.Usuario;
 import com.mcj.api.repository.UsuarioRepository;
+import com.mcj.api.service.TokenService;
 
 public class AuthenticationTokenFilter extends OncePerRequestFilter
 {

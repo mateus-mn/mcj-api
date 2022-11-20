@@ -5,10 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.security.core.GrantedAuthority;
-
 @Entity
-public class Perfil implements GrantedAuthority
+public class Situacao
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +14,11 @@ public class Perfil implements GrantedAuthority
 
 	private String descricao;
 
-	public Perfil()
+	public Situacao()
 	{
 	}
 
-	public Perfil(Long id)
+	public Situacao(Long id)
 	{
 		this.id = id;
 	}
@@ -29,7 +27,7 @@ public class Perfil implements GrantedAuthority
 	{
 		return this.id;
 	}
-
+	
 	public String getDescricao()
 	{
 		return this.descricao;
@@ -43,11 +41,5 @@ public class Perfil implements GrantedAuthority
 	public void setDescricao(String descricao)
 	{
 		this.descricao = descricao;
-	}
-	
-	@Override
-	public String getAuthority()
-	{
-		return this.descricao;
 	}
 }

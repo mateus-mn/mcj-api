@@ -1,6 +1,4 @@
-package com.mcj.api.security;
-
-import java.util.Optional;
+package com.mcj.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,22 +7,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.mcj.api.model.Usuario;
-import com.mcj.api.repository.UsuarioRepository;
 
 @Service
 public class AuthenticationService implements UserDetailsService
 {
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException
 	{
-		Optional<Usuario> usuario = usuarioRepository.findByLogin(login);
+		Usuario usuario = usuarioService.buscarPeloLogin(login);
 
-		if(usuario.isPresent())
+		if(usuario != null)
 		{
-			return usuario.get();
+			return usuario;
 		}
 
 		throw new UsernameNotFoundException("Usuário ou senha incorretos!");

@@ -51,7 +51,6 @@ public class GrupoController
 	{
 		try
 		{
-			// dados da tabela de grupos(principal)
 			Grupo grupo = form.converter();
 			grupoService.cadastrar(grupo);
 			

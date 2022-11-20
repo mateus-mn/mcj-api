@@ -4,12 +4,9 @@ import com.mcj.api.model.Grupo;
 
 public class GrupoForm
 {
-	// PARÂMETROS
 	private Long numero;
 	private String nome;
-	// FIM DOS PARÂMETROS
-	
-	// GETTERS
+
 	public Long getNumero()
 	{
 		return this.numero;
@@ -19,9 +16,7 @@ public class GrupoForm
 	{
 		return this.nome;
 	}
-	// FIM DOS GETTERS
 
-	// OUTROS MÉTODOS
 	// converte os dados vindos da classe GrupoForm para a classe Grupo
 	public Grupo converter()
 	{

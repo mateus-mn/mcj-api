@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.mcj.api.repository.UsuarioRepository;
+import com.mcj.api.service.AuthenticationService;
+import com.mcj.api.service.TokenService;
 
 @EnableWebSecurity
 @Configuration
@@ -50,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		http
 		.cors().and()
 		.authorizeRequests()
-		.antMatchers(HttpMethod.POST,  "/auth/autenticar").permitAll()
+		.antMatchers(HttpMethod.POST,  "/auth/login").permitAll()
 		.antMatchers(HttpMethod.POST,  "/auth/verificarToken").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
