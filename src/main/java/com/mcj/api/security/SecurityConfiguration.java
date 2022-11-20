@@ -14,7 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.mcj.api.repository.UsuarioRepository;
 import com.mcj.api.service.AuthenticationService;
 import com.mcj.api.service.TokenService;
 
@@ -27,9 +26,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
 	@Autowired
 	private TokenService tokenService;
-
-	@Autowired
-	private UsuarioRepository usuarioRepository;
 
 	@Override
 	@Bean
@@ -57,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterBefore(new AuthenticationTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+		.and().addFilterBefore(new AuthenticationTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override

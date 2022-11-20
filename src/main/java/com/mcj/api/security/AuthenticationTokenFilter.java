@@ -1,7 +1,6 @@
 package com.mcj.api.security;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,18 +12,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.mcj.api.model.Usuario;
-import com.mcj.api.repository.UsuarioRepository;
 import com.mcj.api.service.TokenService;
 
 public class AuthenticationTokenFilter extends OncePerRequestFilter
 {
 	private TokenService tokenService;
-	private UsuarioRepository usuarioRepository;
 
-	public AuthenticationTokenFilter(TokenService tokenService, UsuarioRepository usuarioRepository)
+	public AuthenticationTokenFilter(TokenService tokenService)
 	{
 		this.tokenService = tokenService;
-		this.usuarioRepository = usuarioRepository;
 	}
 
 	@Override
@@ -65,15 +61,8 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter
 
 	private void autenticarUsuario(String token)
 	{
-		Long idUsuario = tokenService.getIdUsuario(token);
-		
-		Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
-
-		if (optionalUsuario.isPresent())
-		{
-			Usuario usuario = optionalUsuario.get();
-			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-		}
+		Usuario usuario = tokenService.getCredenciaisUsuario(token);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 }

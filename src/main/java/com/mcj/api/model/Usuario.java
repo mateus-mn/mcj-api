@@ -47,7 +47,12 @@ public class Usuario implements UserDetails
 		this.login  = login;
 		this.senha  = senha;
 		this.perfil = perfis;
+	}
 
+	public Usuario(Long id, String nome)
+	{
+		this.id   = id;
+		this.nome = nome;
 	}
 
 	public Long getId()

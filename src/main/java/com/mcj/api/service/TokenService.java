@@ -31,8 +31,9 @@ public class TokenService
 		return
 			Jwts
 			.builder()
-			.setIssuer("API do Quadrante MCJ")
-			.setSubject(usuario.getId().toString())
+			.setIssuer("API do MCJ")
+			.setId(usuario.getId().toString())
+			.setSubject(usuario.getNome())
 			.setIssuedAt(hoje)
 			.setExpiration(dataExpiracao)
 			.signWith(SignatureAlgorithm.HS256, this.secret)
@@ -52,10 +53,13 @@ public class TokenService
 		}
 	}
 
-	public Long getIdUsuario(String token)
+	public Usuario getCredenciaisUsuario(String token)
 	{
 		Claims claims =  Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-		
-		return Long.parseLong(claims.getSubject());
-	}	
+
+		Long id = Long.parseLong(claims.getId());
+		String nome = claims.getSubject();
+
+		return new Usuario(id, nome);
+	}
 }

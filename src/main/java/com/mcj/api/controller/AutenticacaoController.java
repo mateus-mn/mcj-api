@@ -80,7 +80,9 @@ public class AutenticacaoController
 		{
 			if(Boolean.TRUE.equals(isTOkenValido))
 			{
-				return ResponseEntity.ok(new TokenDto(token, tipoAutenticacao, true, null, null));
+				Usuario usuario = tokenService.getCredenciaisUsuario(token);
+
+				return ResponseEntity.ok(new TokenDto(token, tipoAutenticacao, true, usuario.getId(), usuario.getNome()));
 			}
 			else
 			{
@@ -92,13 +94,4 @@ public class AutenticacaoController
 			return ResponseEntity.badRequest().build();
 		}
 	}
-
-	// retorna o id do usuário com base no token recebido
-	// apagando a palavra "Bearer" do token
-	public Long buscarIdUsuarioPorToken(String token)
-	{
-		token = token.substring(7, token.length());
-
-		return tokenService.getIdUsuario(token);
-	}	
 }
