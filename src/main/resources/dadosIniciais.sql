@@ -1,5 +1,6 @@
 INSERT INTO situacao (descricao) VALUES ('Cadastrado');
 INSERT INTO situacao (descricao) VALUES ('Alterado');
+INSERT INTO situacao (descricao) VALUES ('Acessado');
 INSERT INTO situacao (descricao) VALUES ('Desativado');
 INSERT INTO situacao (descricao) VALUES ('Reativado');
 INSERT INTO situacao (descricao) VALUES ('Logado');

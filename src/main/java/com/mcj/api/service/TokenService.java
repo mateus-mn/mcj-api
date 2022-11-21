@@ -55,6 +55,11 @@ public class TokenService
 
 	public Usuario getCredenciaisUsuario(String token)
 	{
+		if (token.contains("Bearer"))
+		{
+			token = token.substring(7, token.length());
+		}
+
 		Claims claims =  Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
 
 		Long id = Long.parseLong(claims.getId());

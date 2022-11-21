@@ -1,5 +1,6 @@
 package com.mcj.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,20 @@ public class GrupoService
 	public List<Grupo> listar ()
 	{
 		return grupoRepository.findAll();
+	}
+
+	public List<Grupo> buscarPorId(Long id)
+	{
+		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
+
+		List<Grupo> grupos = new ArrayList<>();
+
+		if(optionalGrupo.isPresent())
+		{
+			grupos.add(optionalGrupo.get());
+		}
+
+		return grupos;
 	}
 
 	public void cadastrar (Grupo grupo)
