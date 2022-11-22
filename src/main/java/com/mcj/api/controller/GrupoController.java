@@ -106,6 +106,22 @@ public class GrupoController
 		return ResponseEntity.ok(totais);
 	}
 
+	@GetMapping("/listarAtivos")
+	@CrossOrigin
+	public ResponseEntity<List<GrupoDto>> listarAtivos()
+	{
+		List<Grupo> grupos = grupoService.buscarSomenteAtivos();
+		return ResponseEntity.ok(GrupoDto.converter(grupos));
+	}
+
+	@GetMapping("/listarInativos")
+	@CrossOrigin
+	public ResponseEntity<List<GrupoDto>> listarInativos()
+	{
+		List<Grupo> grupos = grupoService.buscarSomenteInativos();
+		return ResponseEntity.ok(GrupoDto.converter(grupos));
+	}
+
 	@PostMapping("/cadastrar")
 	@Transactional
 	@CrossOrigin

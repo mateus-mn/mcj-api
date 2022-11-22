@@ -33,6 +33,16 @@ public class GrupoService
 		return null;
 	}
 
+	public List<Grupo> buscarSomenteAtivos()
+	{
+		return grupoRepository.buscarSomenteAtivos();
+	}
+
+	public List<Grupo> buscarSomenteInativos()
+	{
+		return grupoRepository.buscarSomenteInativos();
+	}
+
 	public void cadastrar (Grupo grupo)
 	{
 		grupoRepository.save(grupo);
