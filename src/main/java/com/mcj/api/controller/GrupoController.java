@@ -1,6 +1,7 @@
 package com.mcj.api.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -62,18 +63,18 @@ public class GrupoController
 	{
 		try
 		{
-			List<Grupo> grupos = grupoService.buscarPorId(id);
+			Grupo grupo = grupoService.buscarPorId(id);
 
-			if (!grupos.isEmpty())
+			if (grupo != null)
 			{
 				// dados da tabela GrupoHistorico
 				// Obs.: o código 3 é referência para "acessado"
-				grupoHistoricoController.cadastrarHistorico(token, grupos.get(0), Long.valueOf(3));
+				grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(3));
 			}
 
+			List<Grupo> grupos = new ArrayList<>();
+			grupos.add(grupo);
 			return ResponseEntity.ok(GrupoDto.converter(grupos));
-
-			
 		}
 		catch(Exception e)
 		{
@@ -140,6 +141,27 @@ public class GrupoController
 			// dados da tabela GrupoHistorico
 			// Obs.: o código 2 é referência para "alterado"
 			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(2));
+
+			return ResponseEntity.ok(new GrupoDto(grupo));
+		}
+		catch(Exception e)
+		{
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@PutMapping("/desativar/{id}")
+	@Transactional
+	@CrossOrigin
+	public ResponseEntity<GrupoDto> desativar(@PathVariable Long id, @RequestHeader("Authorization") String token)
+	{
+		try
+		{
+			Grupo grupo = grupoService.desativar(id);
+
+			// dados da tabela GrupoHistorico
+			// Obs.: o código 4 é referência para "alterado"
+			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(4));
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
 		}

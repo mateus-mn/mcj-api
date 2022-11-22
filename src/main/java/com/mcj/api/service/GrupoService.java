@@ -1,6 +1,5 @@
 package com.mcj.api.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +21,16 @@ public class GrupoService
 		return grupoRepository.findAll();
 	}
 
-	public List<Grupo> buscarPorId(Long id)
+	public Grupo buscarPorId(Long id)
 	{
 		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
 
-		List<Grupo> grupos = new ArrayList<>();
-
 		if(optionalGrupo.isPresent())
 		{
-			grupos.add(optionalGrupo.get());
+			return optionalGrupo.get();
 		}
 
-		return grupos;
+		return null;
 	}
 
 	public void cadastrar (Grupo grupo)
@@ -50,6 +47,21 @@ public class GrupoService
 
 			grupo.setNumero(form.getNumero());
 			grupo.setNome(form.getNome());
+			
+			return grupo;
+		}
+
+		return null;
+	}
+
+	public Grupo desativar(Long id)
+	{
+		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
+		if(optionalGrupo.isPresent())
+		{
+			Grupo grupo = optionalGrupo.get();
+
+			grupo.setAtivo(false);
 			
 			return grupo;
 		}
