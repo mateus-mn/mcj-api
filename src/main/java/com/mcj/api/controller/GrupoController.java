@@ -160,8 +160,29 @@ public class GrupoController
 			Grupo grupo = grupoService.desativar(id);
 
 			// dados da tabela GrupoHistorico
-			// Obs.: o código 4 é referência para "alterado"
+			// Obs.: o código 4 é referência para "desativado"
 			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(4));
+
+			return ResponseEntity.ok(new GrupoDto(grupo));
+		}
+		catch(Exception e)
+		{
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@PutMapping("/reativar/{id}")
+	@Transactional
+	@CrossOrigin
+	public ResponseEntity<GrupoDto> reativar(@PathVariable Long id, @RequestHeader("Authorization") String token)
+	{
+		try
+		{
+			Grupo grupo = grupoService.reativar(id);
+
+			// dados da tabela GrupoHistorico
+			// Obs.: o código 5 é referência para "reativado"
+			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(5));
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
 		}

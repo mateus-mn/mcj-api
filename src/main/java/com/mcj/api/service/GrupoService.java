@@ -68,4 +68,19 @@ public class GrupoService
 
 		return null;
 	}
+
+	public Grupo reativar(Long id)
+	{
+		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
+		if(optionalGrupo.isPresent())
+		{
+			Grupo grupo = optionalGrupo.get();
+
+			grupo.setAtivo(true);
+			
+			return grupo;
+		}
+
+		return null;
+	}
 }
