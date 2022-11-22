@@ -26,6 +26,10 @@ public class GrupoHistorico
 	@ManyToOne
 	private Usuario usuarioRegistro;
 
+	public GrupoHistorico()
+	{
+	}
+
 	public GrupoHistorico(Grupo grupo, Situacao situacao, Usuario usuarioRegistro)
 	{
 		this.grupo           = grupo;
