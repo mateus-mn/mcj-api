@@ -9,18 +9,15 @@ import org.springframework.stereotype.Service;
 import com.mcj.api.model.Usuario;
 
 @Service
-public class AuthenticationService implements UserDetailsService
-{
+public class AuthenticationService implements UserDetailsService {
 	@Autowired
 	private UsuarioService usuarioService;
 
 	@Override
-	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException
-	{
-		Usuario usuario = usuarioService.buscarPeloLogin(login);
+	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+		Usuario usuario = usuarioService.buscarPorLogin(login);
 
-		if(usuario != null)
-		{
+		if (usuario != null) {
 			return usuario;
 		}
 

@@ -15,8 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Usuario implements UserDetails
-{
+public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -32,134 +31,114 @@ public class Usuario implements UserDetails
 
 	private Boolean ativo = true;
 
-	public Usuario()
-	{
+	public Usuario() {
 	}
 
-	public Usuario(Long id)
-	{
+	public Usuario(Long id) {
 		this.id = id;
 	}
 
-	public Usuario(String nome, String login, String senha, List<Perfil> perfis)
-	{
-		this.nome   = nome;
-		this.login  = login;
-		this.senha  = senha;
+	public Usuario(Long id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
+
+	public Usuario(String nome, String login, String senha, List<Perfil> perfis) {
+		this.nome = nome;
+		this.login = login;
+		this.senha = senha;
 		this.perfil = perfis;
 	}
 
-	public Usuario(Long id, String nome)
-	{
-		this.id   = id;
+	public Usuario(String nome, String login, String senha) {
 		this.nome = nome;
-	}
-
-	public Long getId()
-	{
-		return this.id;
-	}
-	
-	public String getNome()
-	{
-		return this.nome;
-	}
-	
-	public String getLogin()
-	{
-		return this.login;
-	}
-	
-	public String getSenha()
-	{
-		return this.senha;
-	}
-
-	public List<Perfil> getPerfil()
-	{
-		return this.perfil;
-	}
-
-	public Boolean getAtivo()
-	{
-		return this.ativo;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
-	public void setNome(String nome)
-	{
-		this.nome = nome;
-	}
-
-	public void setLogin(String login)
-	{
 		this.login = login;
-	}
-
-	public void setSenha(String senha)
-	{
 		this.senha = senha;
 	}
 
-	public void setPerfil(List<Perfil> perfil)
-	{
+	public Long getId() {
+		return this.id;
+	}
+
+	public String getNome() {
+		return this.nome;
+	}
+
+	public String getLogin() {
+		return this.login;
+	}
+
+	public String getSenha() {
+		return this.senha;
+	}
+
+	public List<Perfil> getPerfil() {
+		return this.perfil;
+	}
+
+	public Boolean getAtivo() {
+		return this.ativo;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public void setPerfil(List<Perfil> perfil) {
 		this.perfil = perfil;
 	}
 
-	public void setAtivo(Boolean ativo)
-	{
+	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities()
-	{
+	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.perfil;
 	}
 
 	@Override
-	public String getPassword()
-	{
+	public String getPassword() {
 		return this.senha;
 	}
-	
+
 	@Override
-	public String getUsername()
-	{
+	public String getUsername() {
 		return this.login;
 	}
 
 	@Override
-	public boolean isAccountNonExpired()
-	{
+	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
-	public boolean isAccountNonLocked()
-	{
+	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
-	public boolean isCredentialsNonExpired()
-	{
+	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
-	public boolean isEnabled()
-	{
-		if(this.ativo == null)
-		{
+	public boolean isEnabled() {
+		if (this.ativo == null) {
 			return false;
-		}
-		else
-		{
+		} else {
 			return this.ativo;
 		}
 	}

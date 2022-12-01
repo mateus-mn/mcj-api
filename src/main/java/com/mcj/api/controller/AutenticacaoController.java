@@ -17,14 +17,14 @@ import com.mcj.api.dto.TokenDto;
 import com.mcj.api.form.LoginForm;
 import com.mcj.api.model.Situacao;
 import com.mcj.api.model.Usuario;
+import com.mcj.api.model.UsuarioHistorico;
 import com.mcj.api.service.TokenService;
 import com.mcj.api.service.UsuarioHistoricoService;
 import com.mcj.api.service.UsuarioService;
 
 @RestController
 @RequestMapping("/auth")
-public class AutenticacaoController
-{
+public class AutenticacaoController {
 	private String tipoAutenticacao = "Bearer";
 
 	@Autowired
@@ -35,62 +35,54 @@ public class AutenticacaoController
 	private UsuarioService usuarioService;
 	@Autowired
 	private UsuarioHistoricoService usuarioHistoricoService;
-	
-	@GetMapping(value = {"", "/"})
+
+	@GetMapping(value = { "", "/" })
 	@CrossOrigin
-	public String index()
-	{
+	public String index() {
 		return "Bem vindo à Entidade Autenticação";
 	}
-	
+
 	@PostMapping("/login")
 	@CrossOrigin
-	public ResponseEntity<TokenDto> autenticar(@RequestBody LoginForm form)
-	{
+	public ResponseEntity<TokenDto> autenticar(@RequestBody LoginForm form) {
 		UsernamePasswordAuthenticationToken dadosLogin = form.converter(form);
 
-		try
-		{
+		try {
 			Authentication authentication = authenticationManager.authenticate(dadosLogin);
 
 			String token = tokenService.gerarToken(authentication);
 
-			Usuario usuario = usuarioService.buscarPeloLogin(form.getLogin());
+			Usuario usuario = usuarioService.buscarPorLogin(form.getLogin());
 
-			// Obs.: o código 5 é referência para "logado"
-			// Obs.2: aqui o histórico é uma auto referencia, pois é o próprio usuário que está logando no sistema
-			usuarioHistoricoService.cadastrar(usuario, new Situacao(Long.valueOf(5)), usuario);
-			
+			// Obs.: o código 6 é referência para "logado"
+			// Obs.2: aqui o histórico é uma auto referencia, pois é o próprio usuário que
+			// está logando no sistema
+			UsuarioHistorico usuarioHistorico = new UsuarioHistorico(usuario, new Situacao(Long.parseLong("6")),
+					usuario);
+			usuarioHistoricoService.cadastrar(usuarioHistorico);
+
 			return ResponseEntity.ok(new TokenDto(token, tipoAutenticacao, true, usuario.getId(), usuario.getNome()));
-			
-		}
-		catch(AuthenticationException e)
-		{
+
+		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
 
 	@PostMapping("/verificarToken")
 	@CrossOrigin
-	public ResponseEntity<TokenDto> verificarToken(@RequestBody String token)
-	{
+	public ResponseEntity<TokenDto> verificarToken(@RequestBody String token) {
 		Boolean isTOkenValido = tokenService.validarToken(token);
 
-		try
-		{
-			if(Boolean.TRUE.equals(isTOkenValido))
-			{
+		try {
+			if (Boolean.TRUE.equals(isTOkenValido)) {
 				Usuario usuario = tokenService.getCredenciaisUsuario(token);
 
-				return ResponseEntity.ok(new TokenDto(token, tipoAutenticacao, true, usuario.getId(), usuario.getNome()));
-			}
-			else
-			{
+				return ResponseEntity
+						.ok(new TokenDto(token, tipoAutenticacao, true, usuario.getId(), usuario.getNome()));
+			} else {
 				return ResponseEntity.ok(new TokenDto(token, tipoAutenticacao, false, null, null));
 			}
-		}
-		catch(AuthenticationException e)
-		{
+		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
