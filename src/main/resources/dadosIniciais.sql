@@ -17,3 +17,6 @@ INSERT INTO usuario (nome, login, senha, ativo) VALUES ('Mateus Mattielo Nickhor
 INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (1, 1);
 
 INSERT INTO usuario_historico (data_hora_registro, usuario_registro_id, situacao_id, usuario_id) VALUES (now(), 1, 1, 1);
+
+INSERT INTO sexo (descricao, sigla) VALUES ('Masculino', 'M');
+INSERT INTO sexo (descricao, sigla) VALUES ('Feminino', 'F');
