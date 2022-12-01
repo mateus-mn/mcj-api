@@ -1,93 +1,101 @@
 package com.mcj.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mcj.api.dto.GrupoDto;
 import com.mcj.api.form.GrupoForm;
 import com.mcj.api.model.Grupo;
 import com.mcj.api.repository.GrupoRepository;
 
 @Service
-public class GrupoService
-{
+public class GrupoService {
 	@Autowired
 	private GrupoRepository grupoRepository;
-	
-	public List<Grupo> listar ()
-	{
+
+	public Grupo converter(GrupoForm grupoForm) {
+		return new Grupo(grupoForm.getNumero(), grupoForm.getNome());
+	}
+
+	public List<GrupoDto> converterParaDto(List<Grupo> grupos) {
+		List<GrupoDto> gruposDto = new ArrayList<>();
+
+		for (Grupo g : grupos) {
+			GrupoDto grupoDto = new GrupoDto(g);
+
+			gruposDto.add(grupoDto);
+		}
+
+		return gruposDto;
+	}
+
+	public List<Grupo> listar() {
 		return grupoRepository.findAll();
 	}
 
-	public Grupo buscarPorId(Long id)
-	{
+	public Grupo buscarPorId(Long id) {
 		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
 
-		if(optionalGrupo.isPresent())
-		{
+		if (optionalGrupo.isPresent()) {
 			return optionalGrupo.get();
 		}
 
 		return null;
 	}
 
-	public List<Grupo> buscarSomenteAtivos()
-	{
+	public List<Grupo> buscarSomenteAtivos() {
 		return grupoRepository.buscarSomenteAtivos();
 	}
 
-	public List<Grupo> buscarSomenteInativos()
-	{
+	public List<Grupo> buscarSomenteInativos() {
 		return grupoRepository.buscarSomenteInativos();
 	}
 
-	public void cadastrar (Grupo grupo)
-	{
+	public Grupo cadastrar(GrupoForm grupoForm) {
+		Grupo grupo = converter(grupoForm);
 		grupoRepository.save(grupo);
+
+		return grupo;
 	}
 
-	public Grupo alterar(Long id, GrupoForm form)
-	{
+	public Grupo alterar(Long id, GrupoForm form) {
 		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
-		if(optionalGrupo.isPresent())
-		{
+		if (optionalGrupo.isPresent()) {
 			Grupo grupo = optionalGrupo.get();
 
 			grupo.setNumero(form.getNumero());
 			grupo.setNome(form.getNome());
-			
+
 			return grupo;
 		}
 
 		return null;
 	}
 
-	public Grupo desativar(Long id)
-	{
+	public Grupo desativar(Long id) {
 		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
-		if(optionalGrupo.isPresent())
-		{
+		if (optionalGrupo.isPresent()) {
 			Grupo grupo = optionalGrupo.get();
 
 			grupo.setAtivo(false);
-			
+
 			return grupo;
 		}
 
 		return null;
 	}
 
-	public Grupo reativar(Long id)
-	{
+	public Grupo reativar(Long id) {
 		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
-		if(optionalGrupo.isPresent())
-		{
+		if (optionalGrupo.isPresent()) {
 			Grupo grupo = optionalGrupo.get();
 
 			grupo.setAtivo(true);
-			
+
 			return grupo;
 		}
 

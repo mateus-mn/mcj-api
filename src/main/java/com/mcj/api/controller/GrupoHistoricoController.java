@@ -20,30 +20,27 @@ import com.mcj.api.service.TokenService;
 
 @RestController
 @RequestMapping("/grupoHistorico")
-public class GrupoHistoricoController
-{
+public class GrupoHistoricoController {
 	@Autowired
 	private GrupoHistoricoService grupoHistoricoService;
 	@Autowired
 	private TokenService tokenService;
-	
-	@GetMapping(value = {"", "/"})
+
+	@GetMapping(value = { "", "/" })
 	@CrossOrigin
-	public String index()
-	{
+	public String index() {
 		return "Bem vindo à Entidade Grupo Histórico";
 	}
 
 	@GetMapping("/listar/{idGrupo}")
 	@CrossOrigin
-	public ResponseEntity<List<GrupoHistoricoDto>> buscarHistorico(@PathVariable Long idGrupo)
-	{	
+	public ResponseEntity<List<GrupoHistoricoDto>> buscarHistorico(@PathVariable Long idGrupo) {
 		List<GrupoHistorico> grupoHistorico = grupoHistoricoService.listar(idGrupo);
-		return ResponseEntity.ok(GrupoHistoricoDto.converter(grupoHistorico));
+		List<GrupoHistoricoDto> grupoHistoricosDto = grupoHistoricoService.converterParaDto(grupoHistorico);
+		return ResponseEntity.ok(grupoHistoricosDto);
 	}
 
-	public void cadastrarHistorico (String token, Grupo grupo, Long idSituacao)
-	{
+	public void cadastrarHistorico(String token, Grupo grupo, Long idSituacao) {
 		Usuario usuario = tokenService.getCredenciaisUsuario(token);
 
 		GrupoHistorico grupoHistorico = new GrupoHistorico(grupo, new Situacao(idSituacao), usuario);

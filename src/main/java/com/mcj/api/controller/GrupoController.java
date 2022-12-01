@@ -27,77 +27,63 @@ import com.mcj.api.service.GrupoService;
 
 @RestController
 @RequestMapping("/grupo")
-public class GrupoController
-{
+public class GrupoController {
 	@Autowired
 	private GrupoHistoricoController grupoHistoricoController;
 	@Autowired
 	private GrupoService grupoService;
 
-	@GetMapping(value = {"", "/"})
+	@GetMapping(value = { "", "/" })
 	@CrossOrigin
-	public String index()
-	{
+	public String index() {
 		return "Bem vindo à Entidade Grupo";
 	}
 
 	@GetMapping("/listar")
 	@CrossOrigin
-	public ResponseEntity<List<GrupoDto>> listar()
-	{
-		try
-		{
+	public ResponseEntity<List<GrupoDto>> listar() {
+		try {
 			List<Grupo> grupos = grupoService.listar();
-			return ResponseEntity.ok(GrupoDto.converter(grupos));
-		}
-		catch(Exception e)
-		{
+			List<GrupoDto> gruposDto = grupoService.converterParaDto(grupos);
+			return ResponseEntity.ok(gruposDto);
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
-		
 	}
 
 	@GetMapping("/listar/{id}")
 	@CrossOrigin
-	public ResponseEntity<List<GrupoDto>> listar(@PathVariable Long id, @RequestHeader("Authorization") String token)
-	{
-		try
-		{
+	public ResponseEntity<List<GrupoDto>> listar(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+		try {
 			Grupo grupo = grupoService.buscarPorId(id);
 
-			if (grupo != null)
-			{
-				// dados da tabela GrupoHistorico
+			if (grupo != null) {
 				// Obs.: o código 3 é referência para "acessado"
 				grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(3));
 			}
 
 			List<Grupo> grupos = new ArrayList<>();
 			grupos.add(grupo);
-			return ResponseEntity.ok(GrupoDto.converter(grupos));
-		}
-		catch(Exception e)
-		{
+
+			List<GrupoDto> gruposDto = grupoService.converterParaDto(grupos);
+
+			return ResponseEntity.ok(gruposDto);
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
 
 	@GetMapping("/listarTotais")
 	@CrossOrigin
-	public ResponseEntity<TotalDto> listarTotais()
-	{
+	public ResponseEntity<TotalDto> listarTotais() {
 		List<Grupo> grupos = grupoService.listar();
 
 		int totalAtivos = 0;
 		int totalInativos = 0;
-		for (Grupo g : grupos)
-		{
-			if (Boolean.TRUE.equals(g.getAtivo()))
-			{
+		for (Grupo g : grupos) {
+			if (Boolean.TRUE.equals(g.getAtivo())) {
 				totalAtivos++;
-			}
-			else
-			{
+			} else {
 				totalInativos++;
 			}
 		}
@@ -108,39 +94,34 @@ public class GrupoController
 
 	@GetMapping("/listarAtivos")
 	@CrossOrigin
-	public ResponseEntity<List<GrupoDto>> listarAtivos()
-	{
+	public ResponseEntity<List<GrupoDto>> listarAtivos() {
 		List<Grupo> grupos = grupoService.buscarSomenteAtivos();
-		return ResponseEntity.ok(GrupoDto.converter(grupos));
+		List<GrupoDto> gruposDto = grupoService.converterParaDto(grupos);
+		return ResponseEntity.ok(gruposDto);
 	}
 
 	@GetMapping("/listarInativos")
 	@CrossOrigin
-	public ResponseEntity<List<GrupoDto>> listarInativos()
-	{
+	public ResponseEntity<List<GrupoDto>> listarInativos() {
 		List<Grupo> grupos = grupoService.buscarSomenteInativos();
-		return ResponseEntity.ok(GrupoDto.converter(grupos));
+		List<GrupoDto> gruposDto = grupoService.converterParaDto(grupos);
+		return ResponseEntity.ok(gruposDto);
 	}
 
 	@PostMapping("/cadastrar")
 	@Transactional
 	@CrossOrigin
-	public ResponseEntity<GrupoDto> cadastrar(@RequestBody GrupoForm form, UriComponentsBuilder uriComponentsBuilder, @RequestHeader("Authorization") String token)
-	{
-		try
-		{
-			Grupo grupo = form.converter();
-			grupoService.cadastrar(grupo);
+	public ResponseEntity<GrupoDto> cadastrar(@RequestBody GrupoForm form, UriComponentsBuilder uriComponentsBuilder,
+			@RequestHeader("Authorization") String token) {
+		try {
+			Grupo grupo = grupoService.cadastrar(form);
 
-			// dados da tabela GrupoHistorico
 			// Obs.: o código 1 é referência para "cadastrado"
 			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(1));
-			
+
 			URI uri = uriComponentsBuilder.path("/grupo/listar/{id}").buildAndExpand(grupo.getId()).toUri();
 			return ResponseEntity.created(uri).body(new GrupoDto(grupo));
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
@@ -148,20 +129,16 @@ public class GrupoController
 	@PutMapping("/alterar/{id}")
 	@Transactional
 	@CrossOrigin
-	public ResponseEntity<GrupoDto> alterar(@RequestBody GrupoForm form, @PathVariable Long id, @RequestHeader("Authorization") String token)
-	{
-		try
-		{
+	public ResponseEntity<GrupoDto> alterar(@RequestBody GrupoForm form, @PathVariable Long id,
+			@RequestHeader("Authorization") String token) {
+		try {
 			Grupo grupo = grupoService.alterar(id, form);
 
-			// dados da tabela GrupoHistorico
 			// Obs.: o código 2 é referência para "alterado"
 			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(2));
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
@@ -169,20 +146,15 @@ public class GrupoController
 	@PutMapping("/desativar/{id}")
 	@Transactional
 	@CrossOrigin
-	public ResponseEntity<GrupoDto> desativar(@PathVariable Long id, @RequestHeader("Authorization") String token)
-	{
-		try
-		{
+	public ResponseEntity<GrupoDto> desativar(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+		try {
 			Grupo grupo = grupoService.desativar(id);
 
-			// dados da tabela GrupoHistorico
 			// Obs.: o código 4 é referência para "desativado"
 			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(4));
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
@@ -190,20 +162,15 @@ public class GrupoController
 	@PutMapping("/reativar/{id}")
 	@Transactional
 	@CrossOrigin
-	public ResponseEntity<GrupoDto> reativar(@PathVariable Long id, @RequestHeader("Authorization") String token)
-	{
-		try
-		{
+	public ResponseEntity<GrupoDto> reativar(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+		try {
 			Grupo grupo = grupoService.reativar(id);
 
-			// dados da tabela GrupoHistorico
 			// Obs.: o código 5 é referência para "reativado"
 			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(5));
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
