@@ -1,12 +1,15 @@
 package com.mcj.api.dto;
 
+import java.util.List;
+
 import com.mcj.api.model.Usuario;
+import com.mcj.api.service.PerfilService;
 
 public class UsuarioDto {
 	private Long id;
 	private String nome;
 	private String login;
-	private String senha;
+	private List<PerfilDto> perfis;
 	private Boolean ativo;
 
 	public UsuarioDto() {
@@ -16,7 +19,7 @@ public class UsuarioDto {
 		this.id = usuario.getId();
 		this.nome = usuario.getNome();
 		this.login = usuario.getLogin();
-		this.senha = usuario.getSenha();
+		this.perfis = PerfilService.converterParaDto(usuario.getPerfis());
 		this.ativo = usuario.getAtivo();
 	}
 
@@ -32,8 +35,8 @@ public class UsuarioDto {
 		return this.login;
 	}
 
-	public String getSenha() {
-		return this.senha;
+	public List<PerfilDto> getPerfis() {
+		return this.perfis;
 	}
 
 	public Boolean getAtivo() {

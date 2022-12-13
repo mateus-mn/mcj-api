@@ -5,20 +5,31 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mcj.api.dto.UsuarioDto;
+import com.mcj.api.form.AlterarSenhaForm;
 import com.mcj.api.form.UsuarioForm;
+import com.mcj.api.model.Perfil;
 import com.mcj.api.model.Usuario;
 import com.mcj.api.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
 	@Autowired
+	private PerfilService perfilService;
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	public Usuario converter(UsuarioForm usuarioForm) {
-		return new Usuario(usuarioForm.getNome(), usuarioForm.getLogin(), usuarioForm.getSenha());
+
+		List<Perfil> perfis = new ArrayList<>();
+		for (Long id : usuarioForm.getPerfis()) {
+			Perfil perfil = perfilService.buscarPorId(id);
+			perfis.add(perfil);
+		}
+		return new Usuario(usuarioForm.getNome(), usuarioForm.getLogin(), usuarioForm.getSenha(), perfis);
 	}
 
 	public List<UsuarioDto> converterParaDto(List<Usuario> usuarios) {
@@ -66,6 +77,17 @@ public class UsuarioService {
 	}
 
 	public Usuario cadastrar(UsuarioForm usuarioForm) {
+
+		// verifica se o usuário já está cadastrado na base
+		Optional<Usuario> optionalUsuario = usuarioRepository.findByLogin(usuarioForm.getLogin());
+
+		if (optionalUsuario.isPresent()) {
+			return null;
+		}
+
+		String senhaBcrypt = new BCryptPasswordEncoder().encode(usuarioForm.getSenha());
+		usuarioForm.setSenha(senhaBcrypt);
+
 		Usuario usuario = converter(usuarioForm);
 		usuarioRepository.save(usuario);
 
@@ -77,9 +99,25 @@ public class UsuarioService {
 		if (optionalUsuario.isPresent()) {
 			Usuario usuario = optionalUsuario.get();
 
+			// se o usuário atual for diferente do que está vindo do front, verifica se este
+			// novo existe na base de dados
+			if (!usuario.getLogin().equals(form.getLogin())) {
+				Optional<Usuario> optionalUsuarioJaExiste = usuarioRepository.findByLogin(form.getLogin());
+
+				if (optionalUsuarioJaExiste.isPresent()) {
+					return null;
+				}
+			}
+
+			List<Perfil> perfis = new ArrayList<>();
+			for (Long idPerfil : form.getPerfis()) {
+				Perfil perfil = perfilService.buscarPorId(idPerfil);
+				perfis.add(perfil);
+			}
+
 			usuario.setNome(form.getNome());
 			usuario.setLogin(form.getLogin());
-			usuario.setSenha(form.getSenha());
+			usuario.setPerfis(perfis);
 
 			return usuario;
 		}
@@ -107,6 +145,20 @@ public class UsuarioService {
 
 			usuario.setAtivo(true);
 
+			return usuario;
+		}
+
+		return null;
+	}
+
+	public Usuario alterarSenha(Long id, AlterarSenhaForm form) {
+		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+
+		if (optionalUsuario.isPresent()) {
+			Usuario usuario = optionalUsuario.get();
+
+			String novaSenhaBcrypt = new BCryptPasswordEncoder().encode(form.getNovaSenha());
+			usuario.setSenha(novaSenhaBcrypt);
 			return usuario;
 		}
 

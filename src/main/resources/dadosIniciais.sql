@@ -10,7 +10,7 @@ INSERT INTO situacao (descricao) VALUES ('Senha alterada');
 INSERT INTO situacao (descricao) VALUES ('Casal coordenador');
 
 INSERT INTO perfil (descricao) VALUES ('Administrador');
-INSERT INTO perfil (descricao) VALUES ('Vistante');
+INSERT INTO perfil (descricao) VALUES ('Visitante');
 
 INSERT INTO usuario (nome, login, senha, ativo) VALUES ('Mateus Mattielo Nickhorn', 'mateus', '$2a$10$5R4MCT.rV02UApZ0PkSriOw970AcgavjqiYTpunFRfUOtkvAv8A6u', true);
 

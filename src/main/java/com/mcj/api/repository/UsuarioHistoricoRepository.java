@@ -11,6 +11,6 @@ import com.mcj.api.model.UsuarioHistorico;
 
 @Repository
 public interface UsuarioHistoricoRepository extends JpaRepository<UsuarioHistorico, Long> {
-	@Query(nativeQuery = true, value = "SELECT uh.* FROM usuario_historico uh WHERE uh.pessoa_id = :idUsuario ORDER BY uh.id DESC")
+	@Query(nativeQuery = true, value = "SELECT uh.* FROM usuario_historico uh WHERE uh.usuario_id = :idUsuario ORDER BY uh.id DESC")
 	List<UsuarioHistorico> buscarHistorico(@Param("idUsuario") Long idUsuarLong);
 }

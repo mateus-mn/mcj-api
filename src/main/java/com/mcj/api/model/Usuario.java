@@ -72,7 +72,7 @@ public class Usuario implements UserDetails {
 		return this.senha;
 	}
 
-	public List<Perfil> getPerfil() {
+	public List<Perfil> getPerfis() {
 		return this.perfil;
 	}
 
@@ -96,8 +96,8 @@ public class Usuario implements UserDetails {
 		this.senha = senha;
 	}
 
-	public void setPerfil(List<Perfil> perfil) {
-		this.perfil = perfil;
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfil = perfis;
 	}
 
 	public void setAtivo(Boolean ativo) {

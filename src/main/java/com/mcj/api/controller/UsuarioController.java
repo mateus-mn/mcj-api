@@ -7,6 +7,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.mcj.api.dto.TotalDto;
 import com.mcj.api.dto.UsuarioDto;
+import com.mcj.api.form.AlterarSenhaForm;
 import com.mcj.api.form.UsuarioForm;
 import com.mcj.api.model.Usuario;
 import com.mcj.api.service.UsuarioService;
@@ -119,6 +121,10 @@ public class UsuarioController {
 		try {
 			Usuario usuario = usuarioService.cadastrar(form);
 
+			if (usuario == null) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+
 			// Obs.: o código 1 é referência para "cadastrado"
 			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(1));
 
@@ -136,6 +142,10 @@ public class UsuarioController {
 			@RequestHeader("Authorization") String token) {
 		try {
 			Usuario usuario = usuarioService.alterar(id, form);
+
+			if (usuario == null) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
 
 			// Obs.: o código 2 é referência para "alterado"
 			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(2));
@@ -171,6 +181,23 @@ public class UsuarioController {
 
 			// Obs.: o código 5 é referência para "reativado"
 			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(5));
+
+			return ResponseEntity.ok(new UsuarioDto(usuario));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	@PutMapping("/alterarSenha/{id}")
+	@Transactional
+	@CrossOrigin
+	public ResponseEntity<UsuarioDto> alterarSenha(@RequestBody AlterarSenhaForm form, @PathVariable Long id,
+			@RequestHeader("Authorization") String token) {
+		try {
+			Usuario usuario = usuarioService.alterarSenha(id, form);
+
+			// Obs.: o código 9 é referência para "senha alterada"
+			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(9));
 
 			return ResponseEntity.ok(new UsuarioDto(usuario));
 		} catch (Exception e) {
