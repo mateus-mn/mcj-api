@@ -9,13 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class GrupoHistorico {
+public class CidadeHistorico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
-	private Grupo grupo;
+	private Cidade cidade;
 
 	@ManyToOne
 	private Situacao situacao;
@@ -25,11 +25,11 @@ public class GrupoHistorico {
 	@ManyToOne
 	private Usuario usuarioRegistro;
 
-	public GrupoHistorico() {
+	public CidadeHistorico() {
 	}
 
-	public GrupoHistorico(Grupo grupo, Situacao situacao, Usuario usuarioRegistro) {
-		this.grupo = grupo;
+	public CidadeHistorico(Cidade cidade, Situacao situacao, Usuario usuarioRegistro) {
+		this.cidade = cidade;
 		this.situacao = situacao;
 		this.usuarioRegistro = usuarioRegistro;
 	}
@@ -38,8 +38,8 @@ public class GrupoHistorico {
 		return this.id;
 	}
 
-	public Grupo getGrupo() {
-		return this.grupo;
+	public Cidade getCidade() {
+		return this.cidade;
 	}
 
 	public Situacao getSituacao() {
@@ -58,8 +58,8 @@ public class GrupoHistorico {
 		this.id = id;
 	}
 
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 	public void setSituacao(Situacao situacao) {

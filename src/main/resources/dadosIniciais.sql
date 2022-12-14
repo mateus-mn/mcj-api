@@ -50,3 +50,7 @@ INSERT INTO estado (nome, sigla, pais_id) VALUES ('Santa Catarina', 'SC', 1);
 INSERT INTO estado (nome, sigla, pais_id) VALUES ('São Paulo', 'SP', 1);
 INSERT INTO estado (nome, sigla, pais_id) VALUES ('Sergipe', 'SE', 1);
 INSERT INTO estado (nome, sigla, pais_id) VALUES ('Tocantins', 'TO', 1);
+
+INSERT INTO cidade (nome, estado_id, ativo) VALUES ('Passo Fundo', 21, true);
+
+INSERT INTO cidade_historico (data_hora_registro, cidade_id, situacao_id, usuario_registro_id) VALUES (now(), 1, 1, 1);
