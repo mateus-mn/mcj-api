@@ -20,3 +20,33 @@ INSERT INTO usuario_historico (data_hora_registro, usuario_registro_id, situacao
 
 INSERT INTO sexo (descricao, sigla) VALUES ('Masculino', 'M');
 INSERT INTO sexo (descricao, sigla) VALUES ('Feminino', 'F');
+
+INSERT INTO pais (nome, sigla) VALUES ('Brasil', 'BR');
+
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Acre', 'AC', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Alagoas', 'AL', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Amapá', 'AP', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Amazonas', 'AM', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Bahia', 'BA', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Ceará', 'CE', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Distrito Federal', 'DF', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Espírito Santo', 'ES', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Goiás', 'GO', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Maranhão', 'MA', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Mato Grosso', 'MT', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Mato Grosso do Sul', 'MS', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Minas Gerais', 'MG', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Pará', 'PA', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Paraíba', 'PB', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Paraná', 'PR', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Pernambuco', 'PE', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Piauí', 'PI', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Rio de Janeiro', 'RJ', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Rio Grande do Norte', 'RN', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Rio Grande do Sul', 'RS', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Rondônia', 'RO', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Roraima', 'RR', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Santa Catarina', 'SC', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('São Paulo', 'SP', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Sergipe', 'SE', 1);
+INSERT INTO estado (nome, sigla, pais_id) VALUES ('Tocantins', 'TO', 1);
