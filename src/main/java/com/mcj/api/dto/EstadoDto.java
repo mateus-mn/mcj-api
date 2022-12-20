@@ -8,6 +8,7 @@ public class EstadoDto {
 	private String sigla;
 	private Long idPais;
 	private String nomePais;
+	private String siglaPais;
 
 	public EstadoDto() {
 	}
@@ -18,6 +19,7 @@ public class EstadoDto {
 		this.sigla = estado.getSigla();
 		this.idPais = estado.getPais().getId();
 		this.nomePais = estado.getPais().getNome();
+		this.siglaPais = estado.getPais().getSigla();
 	}
 
 	public Long getId() {
@@ -38,5 +40,9 @@ public class EstadoDto {
 
 	public String getNomePais() {
 		return this.nomePais;
+	}
+
+	public String getSiglaPais() {
+		return this.siglaPais;
 	}
 }

@@ -9,8 +9,10 @@ public class BairroDto {
 	private String nomeCidade;
 	private Long idEstado;
 	private String nomeEstado;
+	private String siglaEstado;
 	private Long idPais;
 	private String nomePais;
+	private String siglaPais;
 
 	public BairroDto() {
 	}
@@ -22,8 +24,10 @@ public class BairroDto {
 		this.nomeCidade = bairro.getCidade().getNome();
 		this.idEstado = bairro.getCidade().getEstado().getId();
 		this.nomeEstado = bairro.getCidade().getEstado().getNome();
+		this.siglaEstado = bairro.getCidade().getEstado().getSigla();
 		this.idPais = bairro.getCidade().getEstado().getPais().getId();
 		this.nomePais = bairro.getCidade().getEstado().getPais().getNome();
+		this.siglaPais = bairro.getCidade().getEstado().getPais().getSigla();
 	}
 
 	public Long getId() {
@@ -50,11 +54,19 @@ public class BairroDto {
 		return this.nomeEstado;
 	}
 
+	public String getSiglaEstado() {
+		return this.siglaEstado;
+	}
+
 	public Long getIdPais() {
 		return this.idPais;
 	}
 
 	public String getNomePais() {
 		return this.nomePais;
+	}
+
+	public String getSiglaPais() {
+		return this.siglaPais;
 	}
 }
