@@ -9,6 +9,6 @@ import com.mcj.api.model.PessoaEmail;
 
 @Repository
 public interface PessoaEmailRepository extends JpaRepository<PessoaEmail, Long> {
-	@Query(nativeQuery = true, value = "SELECT e.* FROM pessoa_email e WHERE e.ativo = true AND e.id = (SELECT max(e2.id) FROM pessoa_email e2 WHERE e2.pessoa_id = :idPessoa)")
+	@Query(nativeQuery = true, value = "SELECT pe.* FROM pessoa_email pe WHERE pe.ativo = true AND pe.id = (SELECT max(pe2.id) FROM pessoa_email pe2 WHERE pe2.pessoa_id = :idPessoa)")
 	PessoaEmail buscarMaisRecente(@Param("idPessoa") Long idPessoa);
 }
