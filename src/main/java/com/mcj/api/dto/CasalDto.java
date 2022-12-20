@@ -26,6 +26,9 @@ public class CasalDto {
 	private Long idEstado;
 	private String nomeEstado;
 	private String siglaEstado;
+	private Long idPais;
+	private String nomePais;
+	private String siglaPais;
 	private Boolean ativo;
 
 	public CasalDto() {
@@ -55,6 +58,9 @@ public class CasalDto {
 			this.idEstado = endereco.getBairro().getCidade().getEstado().getId();
 			this.nomeEstado = endereco.getBairro().getCidade().getEstado().getNome();
 			this.siglaEstado = endereco.getBairro().getCidade().getEstado().getSigla();
+			this.idPais = endereco.getBairro().getCidade().getEstado().getPais().getId();
+			this.nomePais = endereco.getBairro().getCidade().getEstado().getPais().getNome();
+			this.siglaPais = endereco.getBairro().getCidade().getEstado().getPais().getSigla();
 		}
 
 		this.ativo = casal.getAtivo();
@@ -130,6 +136,18 @@ public class CasalDto {
 
 	public String getSiglaEstado() {
 		return this.siglaEstado;
+	}
+
+	public Long getIdPais() {
+		return this.idPais;
+	}
+
+	public String getNomePais() {
+		return this.nomePais;
+	}
+
+	public String getSiglaPais() {
+		return this.siglaPais;
 	}
 
 	public Boolean getAtivo() {

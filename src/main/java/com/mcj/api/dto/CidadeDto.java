@@ -11,6 +11,7 @@ public class CidadeDto {
 	private Long idPais;
 	private String nomePais;
 	private String siglaPais;
+	private Boolean ativo;
 
 	public CidadeDto() {
 	}
@@ -24,6 +25,7 @@ public class CidadeDto {
 		this.idPais = cidade.getEstado().getPais().getId();
 		this.nomePais = cidade.getEstado().getPais().getNome();
 		this.siglaPais = cidade.getEstado().getPais().getSigla();
+		this.ativo = cidade.getAtivo();
 	}
 
 	public Long getId() {
@@ -56,5 +58,9 @@ public class CidadeDto {
 
 	public String getSiglaPais() {
 		return this.siglaPais;
+	}
+
+	public Boolean getAtivo() {
+		return this.ativo;
 	}
 }

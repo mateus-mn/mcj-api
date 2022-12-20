@@ -13,6 +13,7 @@ public class BairroDto {
 	private Long idPais;
 	private String nomePais;
 	private String siglaPais;
+	private Boolean ativo;
 
 	public BairroDto() {
 	}
@@ -28,6 +29,7 @@ public class BairroDto {
 		this.idPais = bairro.getCidade().getEstado().getPais().getId();
 		this.nomePais = bairro.getCidade().getEstado().getPais().getNome();
 		this.siglaPais = bairro.getCidade().getEstado().getPais().getSigla();
+		this.ativo = bairro.getAtivo();
 	}
 
 	public Long getId() {
@@ -68,5 +70,9 @@ public class BairroDto {
 
 	public String getSiglaPais() {
 		return this.siglaPais;
+	}
+
+	public Boolean getAtivo() {
+		return this.ativo;
 	}
 }
