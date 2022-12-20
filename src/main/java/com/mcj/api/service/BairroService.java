@@ -68,44 +68,24 @@ public class BairroService {
 	}
 
 	public Bairro alterar(Long id, BairroForm form) {
-		Optional<Bairro> optionalBairro = bairroRepository.findById(id);
-		if (optionalBairro.isPresent()) {
-			Bairro bairro = optionalBairro.get();
+		Bairro bairro = buscarPorId(id);
+		Cidade cidade = cidadeService.buscarPorId(form.getCidade());
 
-			Cidade cidade = cidadeService.buscarPorId(form.getCidade());
+		bairro.setNome(form.getNome());
+		bairro.setCidade(cidade);
 
-			bairro.setNome(form.getNome());
-			bairro.setCidade(cidade);
-
-			return bairro;
-		}
-
-		return null;
+		return bairro;
 	}
 
 	public Bairro desativar(Long id) {
-		Optional<Bairro> optionalBairro = bairroRepository.findById(id);
-		if (optionalBairro.isPresent()) {
-			Bairro bairro = optionalBairro.get();
-
-			bairro.setAtivo(false);
-
-			return bairro;
-		}
-
-		return null;
+		Bairro bairro = buscarPorId(id);
+		bairro.setAtivo(false);
+		return bairro;
 	}
 
 	public Bairro reativar(Long id) {
-		Optional<Bairro> optionalBairro = bairroRepository.findById(id);
-		if (optionalBairro.isPresent()) {
-			Bairro bairro = optionalBairro.get();
-
-			bairro.setAtivo(true);
-
-			return bairro;
-		}
-
-		return null;
+		Bairro bairro = buscarPorId(id);
+		bairro.setAtivo(true);
+		return bairro;
 	}
 }

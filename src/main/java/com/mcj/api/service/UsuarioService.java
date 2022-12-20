@@ -95,73 +95,47 @@ public class UsuarioService {
 	}
 
 	public Usuario alterar(Long id, UsuarioForm form) {
-		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-		if (optionalUsuario.isPresent()) {
-			Usuario usuario = optionalUsuario.get();
+		Usuario usuario = buscarPorId(id);
 
-			// se o usuário atual for diferente do que está vindo do front, verifica se este
-			// novo existe na base de dados
-			if (!usuario.getLogin().equals(form.getLogin())) {
-				Optional<Usuario> optionalUsuarioJaExiste = usuarioRepository.findByLogin(form.getLogin());
+		// se o usuário atual for diferente do que está vindo do front, verifica se este
+		// novo existe na base de dados
+		if (!usuario.getLogin().equals(form.getLogin())) {
+			Optional<Usuario> optionalUsuarioJaExiste = usuarioRepository.findByLogin(form.getLogin());
 
-				if (optionalUsuarioJaExiste.isPresent()) {
-					return null;
-				}
+			if (optionalUsuarioJaExiste.isPresent()) {
+				return null;
 			}
-
-			List<Perfil> perfis = new ArrayList<>();
-			for (Long idPerfil : form.getPerfis()) {
-				Perfil perfil = perfilService.buscarPorId(idPerfil);
-				perfis.add(perfil);
-			}
-
-			usuario.setNome(form.getNome());
-			usuario.setLogin(form.getLogin());
-			usuario.setPerfis(perfis);
-
-			return usuario;
 		}
 
-		return null;
+		List<Perfil> perfis = new ArrayList<>();
+		for (Long idPerfil : form.getPerfis()) {
+			Perfil perfil = perfilService.buscarPorId(idPerfil);
+			perfis.add(perfil);
+		}
+
+		usuario.setNome(form.getNome());
+		usuario.setLogin(form.getLogin());
+		usuario.setPerfis(perfis);
+
+		return usuario;
 	}
 
 	public Usuario desativar(Long id) {
-		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-		if (optionalUsuario.isPresent()) {
-			Usuario usuario = optionalUsuario.get();
-
-			usuario.setAtivo(false);
-
-			return usuario;
-		}
-
-		return null;
+		Usuario usuario = buscarPorId(id);
+		usuario.setAtivo(false);
+		return usuario;
 	}
 
 	public Usuario reativar(Long id) {
-		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-		if (optionalUsuario.isPresent()) {
-			Usuario usuario = optionalUsuario.get();
-
-			usuario.setAtivo(true);
-
-			return usuario;
-		}
-
-		return null;
+		Usuario usuario = buscarPorId(id);
+		usuario.setAtivo(true);
+		return usuario;
 	}
 
 	public Usuario alterarSenha(Long id, AlterarSenhaForm form) {
-		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-
-		if (optionalUsuario.isPresent()) {
-			Usuario usuario = optionalUsuario.get();
-
-			String novaSenhaBcrypt = new BCryptPasswordEncoder().encode(form.getNovaSenha());
-			usuario.setSenha(novaSenhaBcrypt);
-			return usuario;
-		}
-
-		return null;
+		Usuario usuario = buscarPorId(id);
+		String novaSenhaBcrypt = new BCryptPasswordEncoder().encode(form.getNovaSenha());
+		usuario.setSenha(novaSenhaBcrypt);
+		return usuario;
 	}
 }

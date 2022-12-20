@@ -80,52 +80,33 @@ public class CasalService {
 	}
 
 	public Casal alterar(Long id, CasalForm form) {
-		Optional<Casal> optionalCasal = casalRepository.findById(id);
-		if (optionalCasal.isPresent()) {
-			Casal casal = optionalCasal.get();
+		Casal casal = buscarPorId(id);
 
-			Pessoa homem = pessoaService.buscarPorId(form.getHomem());
-			Pessoa mulher = pessoaService.buscarPorId(form.getMulher());
+		Pessoa homem = pessoaService.buscarPorId(form.getHomem());
+		Pessoa mulher = pessoaService.buscarPorId(form.getMulher());
 
-			Casal casalPadrinho = buscarPorId(form.getCasalPadrinho());
+		Casal casalPadrinho = buscarPorId(form.getCasalPadrinho());
 
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			LocalDate dataCasamento = LocalDate.parse(form.getDataCasamento(), formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dataCasamento = LocalDate.parse(form.getDataCasamento(), formatter);
 
-			casal.setHomem(homem);
-			casal.setMulher(mulher);
-			casal.setDataCasamento(dataCasamento);
-			casal.setCasalPadrinho(casalPadrinho);
+		casal.setHomem(homem);
+		casal.setMulher(mulher);
+		casal.setDataCasamento(dataCasamento);
+		casal.setCasalPadrinho(casalPadrinho);
 
-			return casal;
-		}
-
-		return null;
+		return casal;
 	}
 
 	public Casal desativar(Long id) {
-		Optional<Casal> optionalCasal = casalRepository.findById(id);
-		if (optionalCasal.isPresent()) {
-			Casal casal = optionalCasal.get();
-
-			casal.setAtivo(false);
-
-			return casal;
-		}
-
-		return null;
+		Casal casal = buscarPorId(id);
+		casal.setAtivo(false);
+		return casal;
 	}
 
 	public Casal reativar(Long id) {
-		Optional<Casal> optionalCasal = casalRepository.findById(id);
-		if (optionalCasal.isPresent()) {
-			Casal casal = optionalCasal.get();
-
-			casal.setAtivo(true);
-
-			return casal;
-		}
-
-		return null;
+		Casal casal = buscarPorId(id);
+		casal.setAtivo(true);
+		return casal;
 	}
 }

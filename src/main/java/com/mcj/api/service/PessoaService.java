@@ -81,48 +81,29 @@ public class PessoaService {
 	}
 
 	public Pessoa alterar(Long id, PessoaForm form) {
-		Optional<Pessoa> optionalPessoa = pessoaRepository.findById(id);
-		if (optionalPessoa.isPresent()) {
-			Pessoa pessoa = optionalPessoa.get();
+		Pessoa pessoa = buscarPorId(id);
 
-			Sexo sexo = sexoService.buscarPorId(form.getSexo());
+		Sexo sexo = sexoService.buscarPorId(form.getSexo());
 
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			LocalDate dataNascimento = LocalDate.parse(form.getDataNascimento(), formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dataNascimento = LocalDate.parse(form.getDataNascimento(), formatter);
 
-			pessoa.setNome(form.getNome());
-			pessoa.setDataNascimento(dataNascimento);
-			pessoa.setSexo(sexo);
+		pessoa.setNome(form.getNome());
+		pessoa.setDataNascimento(dataNascimento);
+		pessoa.setSexo(sexo);
 
-			return pessoa;
-		}
-
-		return null;
+		return pessoa;
 	}
 
 	public Pessoa desativar(Long id) {
-		Optional<Pessoa> optionalPessoa = pessoaRepository.findById(id);
-		if (optionalPessoa.isPresent()) {
-			Pessoa pessoa = optionalPessoa.get();
-
-			pessoa.setAtivo(false);
-
-			return pessoa;
-		}
-
-		return null;
+		Pessoa pessoa = buscarPorId(id);
+		pessoa.setAtivo(false);
+		return pessoa;
 	}
 
 	public Pessoa reativar(Long id) {
-		Optional<Pessoa> optionalPessoa = pessoaRepository.findById(id);
-		if (optionalPessoa.isPresent()) {
-			Pessoa pessoa = optionalPessoa.get();
-
-			pessoa.setAtivo(true);
-
-			return pessoa;
-		}
-
-		return null;
+		Pessoa pessoa = buscarPorId(id);
+		pessoa.setAtivo(true);
+		return pessoa;
 	}
 }

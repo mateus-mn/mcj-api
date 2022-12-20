@@ -63,42 +63,23 @@ public class GrupoService {
 	}
 
 	public Grupo alterar(Long id, GrupoForm form) {
-		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
-		if (optionalGrupo.isPresent()) {
-			Grupo grupo = optionalGrupo.get();
+		Grupo grupo = buscarPorId(id);
 
-			grupo.setNumero(form.getNumero());
-			grupo.setNome(form.getNome());
+		grupo.setNumero(form.getNumero());
+		grupo.setNome(form.getNome());
 
-			return grupo;
-		}
-
-		return null;
+		return grupo;
 	}
 
 	public Grupo desativar(Long id) {
-		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
-		if (optionalGrupo.isPresent()) {
-			Grupo grupo = optionalGrupo.get();
-
-			grupo.setAtivo(false);
-
-			return grupo;
-		}
-
-		return null;
+		Grupo grupo = buscarPorId(id);
+		grupo.setAtivo(false);
+		return grupo;
 	}
 
 	public Grupo reativar(Long id) {
-		Optional<Grupo> optionalGrupo = grupoRepository.findById(id);
-		if (optionalGrupo.isPresent()) {
-			Grupo grupo = optionalGrupo.get();
-
-			grupo.setAtivo(true);
-
-			return grupo;
-		}
-
-		return null;
+		Grupo grupo = buscarPorId(id);
+		grupo.setAtivo(true);
+		return grupo;
 	}
 }

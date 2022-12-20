@@ -70,44 +70,25 @@ public class CidadeService {
 	}
 
 	public Cidade alterar(Long id, CidadeForm form) {
-		Optional<Cidade> optionalCidade = cidadeRepository.findById(id);
-		if (optionalCidade.isPresent()) {
-			Cidade cidade = optionalCidade.get();
+		Cidade cidade = buscarPorId(id);
 
-			Estado estado = estadoService.buscarPorId(form.getEstado());
+		Estado estado = estadoService.buscarPorId(form.getEstado());
 
-			cidade.setNome(form.getNome());
-			cidade.setEstado(estado);
+		cidade.setNome(form.getNome());
+		cidade.setEstado(estado);
 
-			return cidade;
-		}
-
-		return null;
+		return cidade;
 	}
 
 	public Cidade desativar(Long id) {
-		Optional<Cidade> optionalCidade = cidadeRepository.findById(id);
-		if (optionalCidade.isPresent()) {
-			Cidade cidade = optionalCidade.get();
-
-			cidade.setAtivo(false);
-
-			return cidade;
-		}
-
-		return null;
+		Cidade cidade = buscarPorId(id);
+		cidade.setAtivo(false);
+		return cidade;
 	}
 
 	public Cidade reativar(Long id) {
-		Optional<Cidade> optionalCidade = cidadeRepository.findById(id);
-		if (optionalCidade.isPresent()) {
-			Cidade cidade = optionalCidade.get();
-
-			cidade.setAtivo(true);
-
-			return cidade;
-		}
-
-		return null;
+		Cidade cidade = buscarPorId(id);
+		cidade.setAtivo(true);
+		return cidade;
 	}
 }
