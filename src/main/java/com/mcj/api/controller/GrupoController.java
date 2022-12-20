@@ -23,6 +23,7 @@ import com.mcj.api.dto.GrupoDto;
 import com.mcj.api.dto.TotalDto;
 import com.mcj.api.form.GrupoForm;
 import com.mcj.api.model.Grupo;
+import com.mcj.api.model.Situacao;
 import com.mcj.api.service.GrupoService;
 
 @RestController
@@ -59,7 +60,8 @@ public class GrupoController {
 
 			if (grupo != null) {
 				// Obs.: o código 3 é referência para "acessado"
-				grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(3));
+				Situacao situacao = new Situacao(Long.valueOf(3));
+				grupoHistoricoController.cadastrarHistorico(token, grupo, situacao);
 			}
 
 			List<Grupo> grupos = new ArrayList<>();
@@ -117,7 +119,8 @@ public class GrupoController {
 			Grupo grupo = grupoService.cadastrar(form);
 
 			// Obs.: o código 1 é referência para "cadastrado"
-			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(1));
+			Situacao situacao = new Situacao(Long.valueOf(1));
+			grupoHistoricoController.cadastrarHistorico(token, grupo, situacao);
 
 			URI uri = uriComponentsBuilder.path("/grupo/listar/{id}").buildAndExpand(grupo.getId()).toUri();
 			return ResponseEntity.created(uri).body(new GrupoDto(grupo));
@@ -135,7 +138,8 @@ public class GrupoController {
 			Grupo grupo = grupoService.alterar(id, form);
 
 			// Obs.: o código 2 é referência para "alterado"
-			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(2));
+			Situacao situacao = new Situacao(Long.valueOf(2));
+			grupoHistoricoController.cadastrarHistorico(token, grupo, situacao);
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
 		} catch (Exception e) {
@@ -151,7 +155,8 @@ public class GrupoController {
 			Grupo grupo = grupoService.desativar(id);
 
 			// Obs.: o código 4 é referência para "desativado"
-			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(4));
+			Situacao situacao = new Situacao(Long.valueOf(4));
+			grupoHistoricoController.cadastrarHistorico(token, grupo, situacao);
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
 		} catch (Exception e) {
@@ -167,7 +172,8 @@ public class GrupoController {
 			Grupo grupo = grupoService.reativar(id);
 
 			// Obs.: o código 5 é referência para "reativado"
-			grupoHistoricoController.cadastrarHistorico(token, grupo, Long.valueOf(5));
+			Situacao situacao = new Situacao(Long.valueOf(5));
+			grupoHistoricoController.cadastrarHistorico(token, grupo, situacao);
 
 			return ResponseEntity.ok(new GrupoDto(grupo));
 		} catch (Exception e) {

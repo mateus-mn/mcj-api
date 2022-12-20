@@ -40,10 +40,10 @@ public class GrupoHistoricoController {
 		return ResponseEntity.ok(grupoHistoricosDto);
 	}
 
-	public void cadastrarHistorico(String token, Grupo grupo, Long idSituacao) {
+	public void cadastrarHistorico(String token, Grupo grupo, Situacao situacao) {
 		Usuario usuario = tokenService.getCredenciaisUsuario(token);
 
-		GrupoHistorico grupoHistorico = new GrupoHistorico(grupo, new Situacao(idSituacao), usuario);
+		GrupoHistorico grupoHistorico = new GrupoHistorico(grupo, situacao, usuario);
 		grupoHistoricoService.cadastrar(grupoHistorico);
 	}
 }

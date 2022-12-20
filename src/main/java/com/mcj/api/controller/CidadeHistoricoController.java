@@ -40,10 +40,10 @@ public class CidadeHistoricoController {
 		return ResponseEntity.ok(cidadeHistoricosDto);
 	}
 
-	public void cadastrarHistorico(String token, Cidade cidade, Long idSituacao) {
+	public void cadastrarHistorico(String token, Cidade cidade, Situacao situacao) {
 		Usuario usuario = tokenService.getCredenciaisUsuario(token);
 
-		CidadeHistorico cidadeHistorico = new CidadeHistorico(cidade, new Situacao(idSituacao), usuario);
+		CidadeHistorico cidadeHistorico = new CidadeHistorico(cidade, situacao, usuario);
 		cidadeHistoricoService.cadastrar(cidadeHistorico);
 	}
 }

@@ -40,10 +40,10 @@ public class CasalHistoricoController {
 		return ResponseEntity.ok(casalHistoricosDto);
 	}
 
-	public void cadastrarHistorico(String token, Casal casal, Long idSituacao) {
+	public void cadastrarHistorico(String token, Casal casal, Situacao situacao) {
 		Usuario usuario = tokenService.getCredenciaisUsuario(token);
 
-		CasalHistorico casalHistorico = new CasalHistorico(casal, new Situacao(idSituacao), usuario);
+		CasalHistorico casalHistorico = new CasalHistorico(casal, situacao, usuario);
 		casalHistoricoService.cadastrar(casalHistorico);
 	}
 }

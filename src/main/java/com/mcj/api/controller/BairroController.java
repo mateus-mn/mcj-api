@@ -23,6 +23,7 @@ import com.mcj.api.dto.BairroDto;
 import com.mcj.api.dto.TotalDto;
 import com.mcj.api.form.BairroForm;
 import com.mcj.api.model.Bairro;
+import com.mcj.api.model.Situacao;
 import com.mcj.api.service.BairroService;
 
 @RestController
@@ -60,7 +61,8 @@ public class BairroController {
 
 			if (bairro != null) {
 				// Obs.: o código 3 é referência para "acessado"
-				bairroHistoricoController.cadastrarHistorico(token, bairro, Long.valueOf(3));
+				Situacao situacao = new Situacao(Long.valueOf(3));
+				bairroHistoricoController.cadastrarHistorico(token, bairro, situacao);
 			}
 
 			List<Bairro> bairros = new ArrayList<>();
@@ -118,7 +120,8 @@ public class BairroController {
 			Bairro bairro = bairroService.cadastrar(form);
 
 			// Obs.: o código 1 é referência para "cadastrado"
-			bairroHistoricoController.cadastrarHistorico(token, bairro, Long.valueOf(1));
+			Situacao situacao = new Situacao(Long.valueOf(1));
+			bairroHistoricoController.cadastrarHistorico(token, bairro, situacao);
 
 			URI uri = uriComponentsBuilder.path("/bairro/listar/{id}").buildAndExpand(bairro.getId()).toUri();
 			return ResponseEntity.created(uri).body(new BairroDto(bairro));
@@ -136,7 +139,8 @@ public class BairroController {
 			Bairro bairro = bairroService.alterar(id, form);
 
 			// Obs.: o código 2 é referência para "alterado"
-			bairroHistoricoController.cadastrarHistorico(token, bairro, Long.valueOf(2));
+			Situacao situacao = new Situacao(Long.valueOf(2));
+			bairroHistoricoController.cadastrarHistorico(token, bairro, situacao);
 
 			return ResponseEntity.ok(new BairroDto(bairro));
 		} catch (Exception e) {
@@ -152,7 +156,8 @@ public class BairroController {
 			Bairro bairro = bairroService.desativar(id);
 
 			// Obs.: o código 4 é referência para "desativado"
-			bairroHistoricoController.cadastrarHistorico(token, bairro, Long.valueOf(4));
+			Situacao situacao = new Situacao(Long.valueOf(4));
+			bairroHistoricoController.cadastrarHistorico(token, bairro, situacao);
 
 			return ResponseEntity.ok(new BairroDto(bairro));
 		} catch (Exception e) {
@@ -168,7 +173,8 @@ public class BairroController {
 			Bairro bairro = bairroService.reativar(id);
 
 			// Obs.: o código 5 é referência para "reativado"
-			bairroHistoricoController.cadastrarHistorico(token, bairro, Long.valueOf(5));
+			Situacao situacao = new Situacao(Long.valueOf(5));
+			bairroHistoricoController.cadastrarHistorico(token, bairro, situacao);
 
 			return ResponseEntity.ok(new BairroDto(bairro));
 		} catch (Exception e) {

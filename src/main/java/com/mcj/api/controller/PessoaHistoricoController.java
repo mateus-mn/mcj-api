@@ -40,10 +40,10 @@ public class PessoaHistoricoController {
 		return ResponseEntity.ok(pessoaHistoricosDto);
 	}
 
-	public void cadastrarHistorico(String token, Pessoa pessoa, Long idSituacao) {
+	public void cadastrarHistorico(String token, Pessoa pessoa, Situacao situacao) {
 		Usuario usuario = tokenService.getCredenciaisUsuario(token);
 
-		PessoaHistorico pessoaHistorico = new PessoaHistorico(pessoa, new Situacao(idSituacao), usuario);
+		PessoaHistorico pessoaHistorico = new PessoaHistorico(pessoa, situacao, usuario);
 		pessoaHistoricoService.cadastrar(pessoaHistorico);
 	}
 }

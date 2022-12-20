@@ -24,6 +24,7 @@ import com.mcj.api.dto.TotalDto;
 import com.mcj.api.form.CasalForm;
 import com.mcj.api.model.Casal;
 import com.mcj.api.model.CasalEndereco;
+import com.mcj.api.model.Situacao;
 import com.mcj.api.service.CasalEnderecoService;
 import com.mcj.api.service.CasalService;
 
@@ -64,7 +65,8 @@ public class CasalController {
 
 			if (casal != null) {
 				// Obs.: o código 3 é referência para "acessado"
-				casalHistoricoController.cadastrarHistorico(token, casal, Long.valueOf(3));
+				Situacao situacao = new Situacao(Long.valueOf(3));
+				casalHistoricoController.cadastrarHistorico(token, casal, situacao);
 			}
 
 			List<Casal> casais = new ArrayList<>();
@@ -124,7 +126,8 @@ public class CasalController {
 					form.getBairro());
 
 			// Obs.: o código 1 é referência para "cadastrado"
-			casalHistoricoController.cadastrarHistorico(token, casal, Long.valueOf(1));
+			Situacao situacao = new Situacao(Long.valueOf(1));
+			casalHistoricoController.cadastrarHistorico(token, casal, situacao);
 
 			URI uri = uriComponentsBuilder.path("/casal/listar/{id}").buildAndExpand(casal.getId()).toUri();
 			return ResponseEntity.created(uri).body(new CasalDto(casal, endereco));
@@ -144,7 +147,8 @@ public class CasalController {
 					form.getBairro());
 
 			// Obs.: o código 2 é referência para "alterado"
-			casalHistoricoController.cadastrarHistorico(token, casal, Long.valueOf(2));
+			Situacao situacao = new Situacao(Long.valueOf(2));
+			casalHistoricoController.cadastrarHistorico(token, casal, situacao);
 
 			return ResponseEntity.ok(new CasalDto(casal, endereco));
 		} catch (Exception e) {
@@ -161,7 +165,8 @@ public class CasalController {
 			CasalEndereco endereco = casalEnderecoService.buscarMaisRecente(id);
 
 			// Obs.: o código 4 é referência para "desativado"
-			casalHistoricoController.cadastrarHistorico(token, casal, Long.valueOf(4));
+			Situacao situacao = new Situacao(Long.valueOf(4));
+			casalHistoricoController.cadastrarHistorico(token, casal, situacao);
 
 			return ResponseEntity.ok(new CasalDto(casal, endereco));
 		} catch (Exception e) {
@@ -178,7 +183,8 @@ public class CasalController {
 			CasalEndereco endereco = casalEnderecoService.buscarMaisRecente(id);
 
 			// Obs.: o código 5 é referência para "reativado"
-			casalHistoricoController.cadastrarHistorico(token, casal, Long.valueOf(5));
+			Situacao situacao = new Situacao(Long.valueOf(5));
+			casalHistoricoController.cadastrarHistorico(token, casal, situacao);
 
 			return ResponseEntity.ok(new CasalDto(casal, endereco));
 		} catch (Exception e) {

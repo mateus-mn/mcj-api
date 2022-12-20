@@ -40,10 +40,10 @@ public class BairroHistoricoController {
 		return ResponseEntity.ok(bairroHistoricosDto);
 	}
 
-	public void cadastrarHistorico(String token, Bairro bairro, Long idSituacao) {
+	public void cadastrarHistorico(String token, Bairro bairro, Situacao situacao) {
 		Usuario usuario = tokenService.getCredenciaisUsuario(token);
 
-		BairroHistorico bairroHistorico = new BairroHistorico(bairro, new Situacao(idSituacao), usuario);
+		BairroHistorico bairroHistorico = new BairroHistorico(bairro, situacao, usuario);
 		bairroHistoricoService.cadastrar(bairroHistorico);
 	}
 }

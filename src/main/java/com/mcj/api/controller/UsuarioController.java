@@ -24,6 +24,7 @@ import com.mcj.api.dto.TotalDto;
 import com.mcj.api.dto.UsuarioDto;
 import com.mcj.api.form.AlterarSenhaForm;
 import com.mcj.api.form.UsuarioForm;
+import com.mcj.api.model.Situacao;
 import com.mcj.api.model.Usuario;
 import com.mcj.api.service.UsuarioService;
 
@@ -63,7 +64,8 @@ public class UsuarioController {
 
 			if (usuario != null) {
 				// Obs.: o código 3 é referência para "acessado"
-				usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(3));
+				Situacao situacao = new Situacao(Long.valueOf(3));
+				usuarioHistoricoController.cadastrarHistorico(token, usuario, situacao);
 			}
 
 			List<Usuario> usuarios = new ArrayList<>();
@@ -126,7 +128,8 @@ public class UsuarioController {
 			}
 
 			// Obs.: o código 1 é referência para "cadastrado"
-			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(1));
+			Situacao situacao = new Situacao(Long.valueOf(1));
+			usuarioHistoricoController.cadastrarHistorico(token, usuario, situacao);
 
 			URI uri = uriComponentsBuilder.path("/pessoa/listar/{id}").buildAndExpand(usuario.getId()).toUri();
 			return ResponseEntity.created(uri).body(new UsuarioDto(usuario));
@@ -148,7 +151,8 @@ public class UsuarioController {
 			}
 
 			// Obs.: o código 2 é referência para "alterado"
-			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(2));
+			Situacao situacao = new Situacao(Long.valueOf(2));
+			usuarioHistoricoController.cadastrarHistorico(token, usuario, situacao);
 
 			return ResponseEntity.ok(new UsuarioDto(usuario));
 		} catch (Exception e) {
@@ -164,7 +168,8 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.desativar(id);
 
 			// Obs.: o código 4 é referência para "desativado"
-			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(4));
+			Situacao situacao = new Situacao(Long.valueOf(4));
+			usuarioHistoricoController.cadastrarHistorico(token, usuario, situacao);
 
 			return ResponseEntity.ok(new UsuarioDto(usuario));
 		} catch (Exception e) {
@@ -180,7 +185,8 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.reativar(id);
 
 			// Obs.: o código 5 é referência para "reativado"
-			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(5));
+			Situacao situacao = new Situacao(Long.valueOf(5));
+			usuarioHistoricoController.cadastrarHistorico(token, usuario, situacao);
 
 			return ResponseEntity.ok(new UsuarioDto(usuario));
 		} catch (Exception e) {
@@ -197,7 +203,8 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.alterarSenha(id, form);
 
 			// Obs.: o código 9 é referência para "senha alterada"
-			usuarioHistoricoController.cadastrarHistorico(token, usuario, Long.valueOf(9));
+			Situacao situacao = new Situacao(Long.valueOf(9));
+			usuarioHistoricoController.cadastrarHistorico(token, usuario, situacao);
 
 			return ResponseEntity.ok(new UsuarioDto(usuario));
 		} catch (Exception e) {

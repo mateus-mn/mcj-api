@@ -25,6 +25,7 @@ import com.mcj.api.form.PessoaForm;
 import com.mcj.api.model.Pessoa;
 import com.mcj.api.model.PessoaCelular;
 import com.mcj.api.model.PessoaEmail;
+import com.mcj.api.model.Situacao;
 import com.mcj.api.service.PessoaCelularService;
 import com.mcj.api.service.PessoaEmailService;
 import com.mcj.api.service.PessoaService;
@@ -68,7 +69,8 @@ public class PessoaController {
 
 			if (pessoa != null) {
 				// Obs.: o código 3 é referência para "acessado"
-				pessoaHistoricoController.cadastrarHistorico(token, pessoa, Long.valueOf(3));
+				Situacao situacao = new Situacao(Long.valueOf(3));
+				pessoaHistoricoController.cadastrarHistorico(token, pessoa, situacao);
 			}
 
 			List<Pessoa> pessoas = new ArrayList<>();
@@ -128,7 +130,8 @@ public class PessoaController {
 			PessoaEmail pessoaEmail = pessoaEmailService.cadastrar(pessoa, form.getEmail());
 
 			// Obs.: o código 1 é referência para "cadastrado"
-			pessoaHistoricoController.cadastrarHistorico(token, pessoa, Long.valueOf(1));
+			Situacao situacao = new Situacao(Long.valueOf(1));
+			pessoaHistoricoController.cadastrarHistorico(token, pessoa, situacao);
 
 			URI uri = uriComponentsBuilder.path("/pessoa/listar/{id}").buildAndExpand(pessoa.getId()).toUri();
 			return ResponseEntity.created(uri).body(new PessoaDto(pessoa, pessoaCelular, pessoaEmail));
@@ -148,7 +151,8 @@ public class PessoaController {
 			PessoaEmail pessoaEmail = pessoaEmailService.alterar(pessoa, form.getEmail());
 
 			// Obs.: o código 2 é referência para "alterado"
-			pessoaHistoricoController.cadastrarHistorico(token, pessoa, Long.valueOf(2));
+			Situacao situacao = new Situacao(Long.valueOf(2));
+			pessoaHistoricoController.cadastrarHistorico(token, pessoa, situacao);
 
 			return ResponseEntity.ok(new PessoaDto(pessoa, pessoaCelular, pessoaEmail));
 		} catch (Exception e) {
@@ -166,7 +170,8 @@ public class PessoaController {
 			PessoaEmail pessoaEmail = pessoaEmailService.buscarMaisRecente(id);
 
 			// Obs.: o código 4 é referência para "desativado"
-			pessoaHistoricoController.cadastrarHistorico(token, pessoa, Long.valueOf(4));
+			Situacao situacao = new Situacao(Long.valueOf(4));
+			pessoaHistoricoController.cadastrarHistorico(token, pessoa, situacao);
 
 			return ResponseEntity.ok(new PessoaDto(pessoa, pessoaCelular, pessoaEmail));
 		} catch (Exception e) {
@@ -184,7 +189,8 @@ public class PessoaController {
 			PessoaEmail pessoaEmail = pessoaEmailService.buscarMaisRecente(id);
 
 			// Obs.: o código 5 é referência para "reativado"
-			pessoaHistoricoController.cadastrarHistorico(token, pessoa, Long.valueOf(5));
+			Situacao situacao = new Situacao(Long.valueOf(5));
+			pessoaHistoricoController.cadastrarHistorico(token, pessoa, situacao);
 
 			return ResponseEntity.ok(new PessoaDto(pessoa, pessoaCelular, pessoaEmail));
 		} catch (Exception e) {

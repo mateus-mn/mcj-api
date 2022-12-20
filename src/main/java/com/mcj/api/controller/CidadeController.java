@@ -23,6 +23,7 @@ import com.mcj.api.dto.CidadeDto;
 import com.mcj.api.dto.TotalDto;
 import com.mcj.api.form.CidadeForm;
 import com.mcj.api.model.Cidade;
+import com.mcj.api.model.Situacao;
 import com.mcj.api.service.CidadeService;
 
 @RestController
@@ -59,7 +60,8 @@ public class CidadeController {
 
 			if (cidade != null) {
 				// Obs.: o código 3 é referência para "acessado"
-				cidadeHistoricoController.cadastrarHistorico(token, cidade, Long.valueOf(3));
+				Situacao situacao = new Situacao(Long.valueOf(3));
+				cidadeHistoricoController.cadastrarHistorico(token, cidade, situacao);
 			}
 
 			List<Cidade> cidades = new ArrayList<>();
@@ -117,7 +119,8 @@ public class CidadeController {
 			Cidade cidade = cidadeService.cadastrar(form);
 
 			// Obs.: o código 1 é referência para "cadastrado"
-			cidadeHistoricoController.cadastrarHistorico(token, cidade, Long.valueOf(1));
+			Situacao situacao = new Situacao(Long.valueOf(1));
+			cidadeHistoricoController.cadastrarHistorico(token, cidade, situacao);
 
 			URI uri = uriComponentsBuilder.path("/cidade/listar/{id}").buildAndExpand(cidade.getId()).toUri();
 			return ResponseEntity.created(uri).body(new CidadeDto(cidade));
@@ -135,7 +138,8 @@ public class CidadeController {
 			Cidade cidade = cidadeService.alterar(id, form);
 
 			// Obs.: o código 2 é referência para "alterado"
-			cidadeHistoricoController.cadastrarHistorico(token, cidade, Long.valueOf(2));
+			Situacao situacao = new Situacao(Long.valueOf(2));
+			cidadeHistoricoController.cadastrarHistorico(token, cidade, situacao);
 
 			return ResponseEntity.ok(new CidadeDto(cidade));
 		} catch (Exception e) {
@@ -151,7 +155,8 @@ public class CidadeController {
 			Cidade cidade = cidadeService.desativar(id);
 
 			// Obs.: o código 4 é referência para "desativado"
-			cidadeHistoricoController.cadastrarHistorico(token, cidade, Long.valueOf(4));
+			Situacao situacao = new Situacao(Long.valueOf(4));
+			cidadeHistoricoController.cadastrarHistorico(token, cidade, situacao);
 
 			return ResponseEntity.ok(new CidadeDto(cidade));
 		} catch (Exception e) {
@@ -167,7 +172,8 @@ public class CidadeController {
 			Cidade cidade = cidadeService.reativar(id);
 
 			// Obs.: o código 5 é referência para "reativado"
-			cidadeHistoricoController.cadastrarHistorico(token, cidade, Long.valueOf(5));
+			Situacao situacao = new Situacao(Long.valueOf(5));
+			cidadeHistoricoController.cadastrarHistorico(token, cidade, situacao);
 
 			return ResponseEntity.ok(new CidadeDto(cidade));
 		} catch (Exception e) {
